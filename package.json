@@ -1,6 +1,6 @@
 {
   "name": "choosify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Live chat / customer support",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "intercom",
     "drift"
   ],
-  "author": "",
+  "author": "Choosify (https://choosify.chat)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/choosify/choosify/issues"
