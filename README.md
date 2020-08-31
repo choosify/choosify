@@ -1,6 +1,6 @@
 # Choosify
 
-Use [Choosify](https://choosify.chat) as an ES module.
+Add the [Choosify](https://choosify.chat) chat plugin to your website.
 
 ## Installation
 
@@ -15,19 +15,21 @@ yarn install choosify
 ```js
 import Choosify from 'choosify';
 
-const choosify = Choosify('abc123', { env: 'test' });
+const choosify = Choosify('abc123');
 ```
 
-Where `abc123` is your Choosify site ID your find on your [Choosify dashboard](https://app.choosify.chat).
+Where `abc123` is your Choosify site ID listed on your [Choosify dashboard](https://app.choosify.chat).
+
+That's it. The plugin should now load on your page.
 
 ## Options
 
-Options can be specified e.g. as follows:
+The plugin can be customized by passing options when loading it, e.g. as follows:
 
 ```js
 const choosify = Choosify('abc123', {
+    title: 'Any questions?'
     iconColor: '#4ab563'
-    // More options here
 });
 ```
 
@@ -44,7 +46,7 @@ Available options are:
 
 ### `destroy()`
 
-Completely removes the plugin from the page.
+Completely remove the plugin from the page.
 
 Example:
 
