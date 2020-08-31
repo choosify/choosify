@@ -1,0 +1,40 @@
+{
+  "name": "choosify",
+  "version": "1.0.0",
+  "description": "Live chat / customer support",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/choosify/choosify.git"
+  },
+  "keywords": [
+    "chat-plugin",
+    "chat-widget",
+    "chat-application",
+    "chat",
+    "chatbot",
+    "chat-bot",
+    "chatbots",
+    "chatbot-framework",
+    "chatbots-framework",
+    "intercom",
+    "drift"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/choosify/choosify/issues"
+  },
+  "homepage": "https://choosify.chat",
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.1"
+  }
+}

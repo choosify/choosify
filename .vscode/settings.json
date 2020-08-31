@@ -1,0 +1,10 @@
+{
+    "eslint.validate": ["html", "javascript"],
+    "prettier.disableLanguages": ["javascript"], // Format JavaScript files with ESLint instead of Prettier
+    "eslint.format.enable": true,
+      "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "editor.formatOnSave": false,
+  }
