@@ -60,7 +60,7 @@ export default function Choosify(siteID, options) {
       'env', // Can be 'test'
     ].forEach((option) => {
       if (options[option]) {
-        queryString += `&${option}=${options[option]}`;
+        queryString += `&${option}=${encodeURIComponent(options[option])}`;
       }
     });
   }

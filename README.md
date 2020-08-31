@@ -22,6 +22,19 @@ Where `abc123` is your Choosify site ID listed on your [Choosify dashboard](http
 
 That's it. The plugin should now load on your page.
 
+## Alternative installation and usage
+
+Instead of installation via the npm or yarn package manager, Choosify can be imported using a script tag.
+
+To do so, add the following code inside your html `<head>` or `<body>`:
+
+```html
+<script src="https://plugin.choosify.chat/plugin.js"></script>
+<script>var choosify = Choosify('abc123');</script>
+```
+
+Where `abc123` is your Choosify site ID listed on your [Choosify dashboard](https://app.choosify.chat).
+
 ## Options
 
 The plugin can be customized by passing options when loading it, e.g. as follows:
