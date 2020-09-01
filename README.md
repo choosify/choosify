@@ -7,7 +7,7 @@ Add the [Choosify](https://choosify.chat) chat plugin to your website.
 ```sh
 npm install choosify
 # or
-yarn install choosify
+yarn add choosify
 ```
 
 ## Usage

@@ -10,6 +10,7 @@ export default function Choosify(siteID, options) {
   const iframe = document.createElement('iframe');
   let queryString = `_=${Math.random()}`; // Add a random value to the query string for cache busting
 
+  // onWindowMessage listens to messages emitted from the plugin iframe
   function onWindowMessage(e) {
     let message;
     // Make sure the origin of the data is correct
@@ -17,9 +18,18 @@ export default function Choosify(siteID, options) {
       try {
         message = JSON.parse(e.data);
 
-        if (message.type === 'choosify_resize') {
-          iframe.style.setProperty('width', message.width, 'important');
-          iframe.style.setProperty('height', message.height, 'important');
+        // Continue only if the message has a kind='choosify_emit' attribute
+        if (message.kind !== 'choosify_emit') {
+          return;
+        }
+
+        if (message.type === 'resize') {
+          iframe.style.setProperty('width', message.payload.width, 'important');
+          iframe.style.setProperty(
+            'height',
+            message.payload.height,
+            'important'
+          );
         }
       } catch (_) {
         // Nothing to do
@@ -27,17 +37,23 @@ export default function Choosify(siteID, options) {
     }
   }
 
-  function onWindowResize() {
+  // dispatch posts a message to the plugin iframe
+  function dispatch(type, payload) {
     iframe.contentWindow.postMessage(
       JSON.stringify({
-        type: 'window_resize',
-        width: window.innerWidth,
+        kind: 'choosify_dispatch',
+        type,
+        payload,
       }),
       '*'
     );
   }
 
-  // destroy() completely removes the Choosify plugin from the page
+  function onWindowResize() {
+    dispatch('resize', { width: window.innerWidth });
+  }
+
+  // destroy completely removes the Choosify plugin from the page
   function destroy() {
     // Remove the iframe
     document.body.removeChild(iframe);
@@ -67,7 +83,7 @@ export default function Choosify(siteID, options) {
 
   queryString += `&parentWidth=${window.innerWidth}`;
 
-  iframe.src = `${domain}/${siteID}?${queryString}`;
+  iframe.src = `${domain}/s/${siteID}?${queryString}`;
   iframe.style.cssText =
     'display: block !important; position: fixed !important; width: 100px !important; height: 100px !important; top: auto !important; left: auto !important; bottom: 0 !important; right: 0 !important; z-index: 2147483647 !important; max-height: none !important; max-width: 100% !important; transition: all 0s ease 0s !important; background: none !important; border: none !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; touch-action: auto !important;';
   document.body.appendChild(iframe);
