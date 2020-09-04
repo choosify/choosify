@@ -6,9 +6,11 @@ export default function Choosify(siteID, options) {
 
   const domain = 'https://plugin.choosify.chat';
 
-  // Add the iframe to the body
+  // Create the iframe element
   const iframe = document.createElement('iframe');
-  let queryString = `_=${Math.random()}`; // Add a random value to the query string for cache busting
+
+  // Use a random value in the iframe query string for cache busting, to be sure the latest version is loaded
+  let queryString = `_=${Math.random()}`;
 
   // onWindowMessage listens to messages emitted from the plugin iframe
   function onWindowMessage(e) {
@@ -49,6 +51,7 @@ export default function Choosify(siteID, options) {
     );
   }
 
+  // onWindowResize posts a message to the iframe when the parent window is resized
   function onWindowResize() {
     dispatch('resize', { width: window.innerWidth });
   }
@@ -58,40 +61,38 @@ export default function Choosify(siteID, options) {
     // Remove the iframe
     document.body.removeChild(iframe);
 
-    // Remove event listeners
+    // Remove event listeners from the window
     window.removeEventListener('message', onWindowMessage);
     window.removeEventListener('resize', onWindowResize);
   }
 
-  // Append the options to the iframe URL
+  // Append the passed options to the iframe query string
   if (options && typeof options === 'object') {
-    [
-      'title',
-      'subtitle',
-      'iconColor',
-      'icon',
-      'headerColor',
-      'operatorName',
-      'operatorIcon',
-      'env', // Can be 'test'
-    ].forEach((option) => {
-      if (options[option]) {
-        queryString += `&${option}=${encodeURIComponent(options[option])}`;
-      }
-    });
+    queryString += `&${Object.keys(options)
+      .map(
+        (key) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(options[key])}`
+      )
+      .join('&')}`;
   }
 
-  queryString += `&parentWidth=${window.innerWidth}`;
+  // Add the parent width and location to the query string (at the end, since the query string might be truncated when longer than 2048 characters)
+  queryString += `&parentWidth=${
+    window.innerWidth
+  }&location=${encodeURIComponent(window.location.href)}`;
 
+  // Set the iframe attributes and add it to the body
   iframe.src = `${domain}/s/${siteID}?${queryString}`;
   iframe.style.cssText =
     'display: block !important; position: fixed !important; width: 100px !important; height: 100px !important; top: auto !important; left: auto !important; bottom: 0 !important; right: 0 !important; z-index: 2147483647 !important; max-height: none !important; max-width: 100% !important; transition: all 0s ease 0s !important; background: none !important; border: none !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; touch-action: auto !important;';
+
   document.body.appendChild(iframe);
 
-  // Add event listeners
+  // Add event listeners to the window
   window.addEventListener('message', onWindowMessage);
   window.addEventListener('resize', onWindowResize);
 
+  // Return the Choosify object
   return Object.freeze({
     destroy,
   });
